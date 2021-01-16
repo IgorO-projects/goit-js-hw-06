@@ -22,7 +22,9 @@ const getUsersWithEyeColor = (users, color) => {
 
   //3-d task -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 const getUsersWithGender = (users, gender) => {
-    return users.filter(user => gender === user.gender);
+    return users
+    .filter(user => gender === user.gender)
+    .map(user => user.name);
   };
   
   console.log(getUsersWithGender(users, 'male')); // [ 'Moore Hensley', 'Ross Vazquez', 'Carey Barr', 'Blackburn Dotson' ]
@@ -46,7 +48,7 @@ const getUserWithEmail = (users, email) => {
   console.log(spc);
 
   //6-th task -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
-  const getUsersWithAge = (users, min, max) => {
+const getUsersWithAge = (users, min, max) => {
     return users.filter(user => user.age > min && user.age < max);
   };
   
@@ -56,7 +58,7 @@ const getUserWithEmail = (users, email) => {
   console.log(spc);
 
   //7-th task -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
-  const calculateTotalBalance = users => {
+const calculateTotalBalance = users => {
     return users.reduce((acc, item) => {
         return acc + item.balance;
     }, 0);
@@ -65,4 +67,58 @@ const getUserWithEmail = (users, email) => {
   console.log(spc);
 
   //8-th task -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+const getUsersWithFriend = (users, friendName) => {
+    return users
+    .filter(user => {
+        if(user.friends.includes(friendName)) {
+            return user;
+        }
+    })
+    .map(user => user.name);
+  };
   
+  console.log(getUsersWithFriend(users, 'Briana Decker')); // [ 'Sharlene Bush', 'Sheree Anthony' ]
+  console.log(getUsersWithFriend(users, 'Goldie Gentry')); // [ 'Elma Head', 'Sheree Anthony' ]
+  console.log(spc);
+
+  //9-th task -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+const getNamesSortedByFriendsCount = users => {
+    const compareByQuantityFriends = (prev, next) => {
+        return prev.friends.length - next.friends.length;
+    }
+    return users
+    .slice()
+    .sort(compareByQuantityFriends)
+    .map(user => user.name);
+  };
+  
+  console.log(getNamesSortedByFriendsCount(users));
+  // [ 'Moore Hensley', 'Sharlene Bush', 'Elma Head', 'Carey Barr', 'Blackburn Dotson', 'Sheree Anthony', 'Ross Vazquez' ]
+  console.log(spc);
+
+  //10-th task -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+  const getSortedUniqueSkills = users => {
+    // return users
+    // .reduce((acc, item) => {
+    //     acc.push(...item.skills)
+
+    //     return acc;
+    // }, [])
+    // .filter((item, index, arr) => {
+    //     if(arr.indexOf(item) !== index) {
+    //         return;
+    //     }
+    //     return item;
+    // })
+    // .sort();
+    return users
+    .reduce((acc, item) => {
+        acc.push(...item.skills)
+
+        return acc;
+    }, [])
+    .filter((item, index, arr) => arr.indexOf(item) === index)
+    .sort();
+  };
+  console.log(getSortedUniqueSkills(users));
+  // [ 'adipisicing', 'amet', 'anim', 'commodo', 'culpa', 'elit', 'ex', 'ipsum', 'irure', 'laborum', 'lorem', 'mollit', 'non', 'nostrud', 'nulla', 'proident', 'tempor', 'velit', 'veniam' ]
